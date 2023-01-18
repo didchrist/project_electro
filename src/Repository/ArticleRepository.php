@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,14 +39,46 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findAllArticle(int $page, string $slug, int $limit = 6): array
+    public function findAllArticle(int $page = 1, string $univers = 'a.univers', int $limit = 30): array
     {
         $limit = abs($limit);
 
         $result = [];
 
-        $query = $this->getEntityManager()->createQueryBuilder();
-        return $this->findby(array(), array('univers' => 'ASC'));
+        if($univers === 'a.univers') {
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.univers = $univers")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } else {
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.univers = '$univers'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        }      
+        
+        $paginator = new Paginator($query);
+        $data = $paginator->getQuery()->getResult();        
+
+        if(empty($data)) {
+            return $result;
+        }
+
+        //nombre de pages
+        $pages = ceil($paginator->count() / $limit);
+
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+        
+        return $result;
     }
 
 //    /**
