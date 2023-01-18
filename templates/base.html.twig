@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}ElectroSprint{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+        <link rel="icon" href="{{ asset('img/favicon.png') }}">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo">
+                    <a href=""><img src="{{ asset('img/logo_transparent.png') }}" alt="logo ElectroLuxe"></a>
+                </div>
+                <div class="barre-recherche">
+                    <input type="search">
+                    <button type="submit">
+                        <img src="{{ asset('img/loupe.png')}}" alt="icones loupe crée par Ayub Irawan">
+                    </button>
+                </div>
+                <ul class="menu-nav">
+                    <li><a href="">Magasin</a></li>
+                    <li><a href="">Compte</a></li>
+                    <li><a href="">Panier</a></li>
+                </ul>
+                <div class="nav-bande">
+                    <ul class="menu-bande">
+                        <li><a href="">Test</a></li>
+                        <li><a href="">Testo</a></li>
+                        <li><a href="">Testo</a></li>
+                        <li><a href="">Testo</a></li>
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <div class="content">
+        {% block body %}
+        
+        {% endblock %}
+        </div>
+        <footer>
+            <a href="https://www.flaticon.com/fr/icones-gratuites/loupe" title="loupe icônes">Loupe icônes créées par Ayub Irawan - Flaticon</a>
+        </footer>
+    </body>
+</html>

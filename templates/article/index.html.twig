@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ElectroSprint{% endblock %}
+
+{% block body %}
+<div class="block">
+{% for article in articles %}
+    <div class="produit">
+        <p class="description-card">{{ article.univers}}</p>
+        <div class="card">
+            <img src="https://via.placeholder.com/180x140" alt="placeholder">
+            <p class="card-article">
+                {% if (article.famille != 'Téléviseur') and (article.famille != 'Hotte aspirante') %}
+                {{ article.famille }} 
+                {% endif %}
+                {{article.sousfamille }} {{ article.codearticle }}
+            </p>
+            {% if article.prixvente %}
+            <p class="card-prix">{{article.prixvente }} €</p>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

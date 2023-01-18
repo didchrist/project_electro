@@ -1,0 +1,105 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 10px;
+}
+header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+nav .menu-nav {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding-left: 10%;
+    width: 31%;
+}
+nav ul li {
+    padding: 20px;
+}
+nav .barre-recherche, nav .logo {
+    width: 33%;
+    display: flex;
+}
+nav input {
+    width: 100%;
+    border: none;
+    font-size: 2rem;
+}
+nav button:hover {
+    cursor: pointer;
+}
+nav .logo {
+    justify-content: end;
+    padding-right: 20%;
+}
+nav .barre-recherche {
+    border: 2px solid black;
+    border-radius: 5px;
+    justify-content: center;
+    margin-top: -30px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+}
+nav .nav-bande {
+    width: 100%;
+}
+nav .nav-bande .menu-bande {
+    display: flex;
+    list-style: none;
+    margin-top: -30px;
+    background-color:#f6f6f6 ;
+    padding-left: 15%;
+}
+.content {
+    margin: 5%;
+}
+footer {
+    text-align: right;
+    
+}
+footer a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.4rem;
+}
+.block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+.produit {
+    margin: 20px;
+    text-align: center;
+}
+.description-card {
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.353);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    width: 200px;
+    padding-top: 20px;
+    position: relative;
+}
+.card-article {
+    font-size: 1.6rem;
+    text-align: center;
+    padding: 10px 0 10px 0;
+} 
+.card-prix {
+    position: absolute;
+    bottom: 5%;
+    font-size: 2rem;
+}
