@@ -14,11 +14,15 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $repo, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
-        $articles = $repo->findAllArticle($page);
+        $filtre = $request->query->get('filtre', 'a.univers');
+        $filtre2 = $request->query->get('famille');
+        $filtre3 = $request->query->get('sous_famille');
+        $articles = $repo->findAllArticle($page, $filtre, $filtre2, $filtre3);
 
         return $this->render('article/index.html.twig', [
             'controller_name' => 'ArticleController',
-            'articles' => $articles
+            'articles' => $articles,
+            'filtre' => $filtre
         ]);
     }
 }

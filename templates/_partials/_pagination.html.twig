@@ -1,28 +1,44 @@
 {% if pages > 1 %}
-    <nav>
-        <ul>
-            <li>
-                {% if currentPage > 1 %}
-                <a href="{{ path(path, {page: currentPage - 1}) }}">&lt;</a>
-                {% else %}
-                <a>&lt;</a>
-                {% endif %}
-                
-            </li>
-            {% for page in 1..pages %}
-                <li>
-                    <a href="{{ path(path, {page: page}) }}">{{ page }}</a>
-                </li>
-            {% endfor %}
-            <li>
-                {% if currentPage < pages %}
-                <a href="{{ path(path, {page: currentPage + 1}) }}">&gt;</a>
-                {% else %}
-                <a>&gt;</a>
-                {% endif %}
-                
-            </li>
-        </ul>
-    </nav>
-    
+<nav class="nav-pagination">
+  <ul class="pagination">
+    {% if currentPage > 1 %}
+    <li class="fleche">
+      <a href="{{ path(path, { page: currentPage - 1 }) }}">&lt;</a>
+    </li>
+    {% else %}
+    <li class="fleche disabled">
+      <a>&lt;</a>
+    </li>
+    {% endif %} {% if currentPage > 2 %}
+    <li class="page-lien">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage - 2 }) }}">{{ currentPage - 2 }}</a>
+    </li>
+    {% endif %} {% if currentPage > 1 %}
+    <li class="page-lien">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage - 1 }) }}">{{ currentPage - 1 }}</a>
+    </li>
+    {% endif %}
+    <li class="current-page">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage }) }}">{{ currentPage }}</a>
+    </li>
+    {% if currentPage < pages %}
+    <li class="page-lien">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage + 1 }) }}">{{ currentPage + 1 }}</a>
+    </li>
+    {% endif %} {% if currentPage < (pages - 1) %}
+    <li class="page-lien">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage + 2 }) }}">{{ currentPage + 2 }}</a>
+    </li>
+    {% endif %} {% if currentPage < pages %}
+    <li class="fleche">
+      <a href="{{ path(path, { filtre: filtre, page: currentPage + 1 }) }}">&gt;</a>
+    </li>
+    {% else %}
+    <li class="fleche disabled">
+      <a>&gt;</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+
 {% endif %}

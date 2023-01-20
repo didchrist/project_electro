@@ -1,105 +1,253 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-size: 10px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 10px;
 }
 header nav {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 nav .menu-nav {
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    padding-left: 10%;
-    width: 31%;
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding-left: 10%;
+  width: 31%;
 }
 nav ul li {
-    padding: 20px;
+  padding: 20px;
 }
-nav .barre-recherche, nav .logo {
-    width: 33%;
-    display: flex;
+nav .barre-recherche,
+nav .logo {
+  width: 33%;
+  display: flex;
 }
 nav input {
-    width: 100%;
-    border: none;
-    font-size: 2rem;
+  width: 100%;
+  border: none;
+  font-size: 2rem;
+  padding: 5px;
 }
 nav button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 nav .logo {
-    justify-content: end;
-    padding-right: 20%;
+  justify-content: end;
+  padding-right: 20%;
 }
 nav .barre-recherche {
-    border: 2px solid black;
-    border-radius: 5px;
-    justify-content: center;
-    margin-top: -30px;
+  border: 2px solid black;
+  border-radius: 5px;
+  justify-content: center;
+  margin-top: -30px;
 }
 nav ul li a {
-    text-decoration: none;
-    color: black;
-    font-size: 2rem;
+  text-decoration: none;
+  color: black;
+  font-size: 2rem;
 }
 nav .nav-bande {
-    width: 100%;
+  width: 100%;
 }
 nav .nav-bande .menu-bande {
-    display: flex;
-    list-style: none;
-    margin-top: -30px;
-    background-color:#f6f6f6 ;
-    padding-left: 15%;
+  display: flex;
+  list-style: none;
+  margin-top: -30px;
+  background-color: #f6f6f6;
+  padding-left: 15%;
 }
 .content {
-    margin: 5%;
+  margin: 5%;
 }
 footer {
-    text-align: right;
-    
+  text-align: right;
+  min-height: 70vh;
 }
 footer a {
-    text-decoration: none;
-    color: black;
-    font-size: 1.4rem;
+  text-decoration: none;
+  color: black;
+  font-size: 1.4rem;
 }
 .block {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px;
 }
 .produit {
-    margin: 20px;
-    text-align: center;
+  margin: 20px;
+  text-align: center;
 }
 .description-card {
-    font-size: 1.2rem;
-    margin-top: 5px;
+  font-size: 1.2rem;
+  margin-top: 5px;
 }
 .card {
-    border: 1px solid rgba(0, 0, 0, 0.353);
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 250px;
-    width: 200px;
-    padding-top: 20px;
-    position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.353);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 250px;
+  width: 200px;
+  padding-top: 20px;
+  position: relative;
 }
 .card-article {
-    font-size: 1.6rem;
-    text-align: center;
-    padding: 10px 0 10px 0;
-} 
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 10px 0 10px 0;
+}
 .card-prix {
-    position: absolute;
-    bottom: 5%;
-    font-size: 2rem;
+  position: absolute;
+  bottom: 5%;
+  font-size: 2rem;
+}
+.nav-pagination {
+  display: flex;
+  justify-content: end;
+}
+.pagination {
+  display: flex;
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 80px;
+}
+.fleche {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: table;
+  padding: 0;
+  height: 80px;
+}
+.fleche a {
+  font-size: 4rem;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  height: 100%;
+  width: 60px;
+  transition: all 0.5s;
+}
+.page-lien a {
+  background-color: rgba(104, 104, 224, 0.699);
+  display: table-cell;
+  border-radius: 60px;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+  width: 60px;
+  transition: all 0.5s;
+}
+.page-lien {
+  margin: 10px;
+  padding: 0;
+  display: table;
+}
+.disabled {
+  background-color: rgba(143, 51, 51, 0.644);
+}
+.fleche a:hover,
+.page-lien a:hover {
+  background-color: rgba(0, 0, 0, 0.699);
+  border-radius: 10px;
+  color: white;
+}
+.current-page {
+  padding: 0;
+  display: table;
+  margin: 10px;
+}
+.current-page a {
+  background-color: rgba(0, 128, 0, 0.527);
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 60px;
+  border-radius: 10px;
+  transition: all 0.5s;
+  color: white;
+}
+.current-page a:hover {
+  background-color: rgba(0, 0, 0, 0.699);
+  border-radius: 5px;
+}
+.nav-produits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -20px;
+  transition: all 0.5s;
+}
+.nav-produits:hover {
+  background-color: rgba(0, 0, 0, 0.699);
+  color: white;
+  border-radius: 5px;
+}
+.nav-produits::before {
+  display: block;
+  content: "☰";
+  margin-right: 15px;
+}
+.nav-produits::after {
+  display: block;
+  content: "|";
+  margin-left: 15px;
+}
+#menuderoulant,
+#menuderoulant ~ div {
+  display: none;
+}
+#menuderoulant:target ~ .menuderoulant {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  position: absolute;
+  left: 10%;
+  top: 285px;
+  width: 15%;
+  height: 100%;
+  background-color: white;
+  border: 1px solid black;
+  z-index: 1;
+}
+.menuderoulant a {
+  text-decoration: none;
+  font-size: 2rem;
+  color: black;
+  width: 100%;
+  border: 1px solid black;
+  padding: 10px;
+  transition: all 0.5s;
+}
+.menuderoulant ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+.menuderoulant a:hover {
+  background-color: black;
+  color: white;
+}
+.menuderoulant li {
+  width: 100%;
+}
+.menuderoulant ul li a {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+body .sous-menu-pose,
+body .sous-menu-encastrable,
+body .sous-menu-pem {
+  display: none;
+}
+body .sous-menu-pem:target {
+  display: flex;
+  flex-direction: column;
 }

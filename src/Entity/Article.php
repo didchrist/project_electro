@@ -29,7 +29,7 @@ class Article
     #[ORM\Column(length: 40)]
     private ?string $code_article = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 0, nullable: true)]
     private ?int $ean = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

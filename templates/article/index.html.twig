@@ -1,32 +1,21 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}ElectroSprint{% endblock %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}ElectroSprint{% endblock %} {% block body %}
 <div class="block">
-{% for article in articles.data %}
-    <div class="produit">
-        <p class="description-card">{{ article.univers}}</p>
-        <div class="card">
-            <img src="https://via.placeholder.com/180x140" alt="placeholder">
-            <p class="card-article">
-                {% if (article.famille != 'Téléviseur') and (article.famille != 'Hotte aspirante') %}
-                {{ article.famille }} 
-                {% endif %}
-                {{article.sousfamille }} {{ article.codearticle }}
-            </p>
-            {% if article.prixvente %}
-            <p class="card-prix">{{article.prixvente }} €</p>
-            {% endif %}
-        </div>
+  {% for article in articles.data %}
+  <div class="produit">
+    <p class="description-card">{{ article.univers }}</p>
+    <div class="card">
+      <img src="https://via.placeholder.com/180x140" alt="placeholder" />
+      <p class="card-article">
+        {% if (article.famille != 'Téléviseur') and (article.famille != 'Hotte aspirante') %}
+        {{ article.famille }}
+        {% endif %}
+        {{ article.sousfamille }} {{ article.codearticle }}
+      </p>
+      {% if article.prixvente %}
+      <p class="card-prix">{{ article.prixvente }} €</p>
+      {% endif %}
     </div>
-{% endfor %}
-{% set path = 'app_article' %}
-{# {% set filtre = articles.filtre %} #}
-{% set pages = articles.pages %}
-{% set currentPage = articles.page %}
-
+  </div>
+  {% endfor %} {% set path = 'app_article' %} {% set filtre = filtre %} {% set pages = articles.pages %} {% set currentPage = articles.page %}
 </div>
-{% include "_partials/_pagination.html.twig" %}
-{% endblock %}
-
+{% include "_partials/_pagination.html.twig" %} {% endblock %}

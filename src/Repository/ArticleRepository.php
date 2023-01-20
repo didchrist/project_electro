@@ -39,34 +39,54 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findAllArticle(int $page = 1, string $univers = 'a.univers', int $limit = 30): array
+    public function findAllArticle(int $page = 1, string $univers = 'a.univers', string $famille = null, string $sous_famille = null, int $limit = 30): array
     {
         $limit = abs($limit);
 
         $result = [];
 
-        if($univers === 'a.univers') {
+        if ($univers === 'a.univers') {
             $query = $this->getEntityManager()->createQueryBuilder()
                 ->select('a')
                 ->from('App\Entity\Article', 'a')
                 ->where("a.univers = $univers")
-                ->orderBy('a.marque', 'ASC')
+                ->orderBy('a.univers', 'ASC')
                 ->setMaxResults($limit)
                 ->setFirstResult($page * $limit - $limit);
         } else {
-            $query = $this->getEntityManager()->createQueryBuilder()
-                ->select('a')
-                ->from('App\Entity\Article', 'a')
-                ->where("a.univers = '$univers'")
-                ->orderBy('a.marque', 'ASC')
-                ->setMaxResults($limit)
-                ->setFirstResult($page * $limit - $limit);
-        }      
-        
-        $paginator = new Paginator($query);
-        $data = $paginator->getQuery()->getResult();        
+            if ($famille != null) {
+                if ($sous_famille != null) {
+                    $query = $this->getEntityManager()->createQueryBuilder()
+                        ->select('a')
+                        ->from('App\Entity\Article', 'a')
+                        ->where("a.famille = '$famille' and a.sous_famille = '$sous_famille'")
+                        ->orderBy('a.marque', 'ASC')
+                        ->setMaxResults($limit)
+                        ->setFirstResult($page * $limit - $limit);
+                } else {
+                    $query = $this->getEntityManager()->createQueryBuilder()
+                        ->select('a')
+                        ->from('App\Entity\Article', 'a')
+                        ->where("a.famille = '$famille'")
+                        ->orderBy('a.marque', 'ASC')
+                        ->setMaxResults($limit)
+                        ->setFirstResult($page * $limit - $limit);
+                }
+            } else {
+                $query = $this->getEntityManager()->createQueryBuilder()
+                    ->select('a')
+                    ->from('App\Entity\Article', 'a')
+                    ->where("a.univers = '$univers'")
+                    ->orderBy('a.marque', 'ASC')
+                    ->setMaxResults($limit)
+                    ->setFirstResult($page * $limit - $limit);
+            }
+        }
 
-        if(empty($data)) {
+        $paginator = new Paginator($query);
+        $data = $paginator->getQuery()->getResult();
+
+        if (empty($data)) {
             return $result;
         }
 
@@ -77,32 +97,32 @@ class ArticleRepository extends ServiceEntityRepository
         $result['pages'] = $pages;
         $result['page'] = $page;
         $result['limit'] = $limit;
-        
+
         return $result;
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Article[] Returns an array of Article objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('a.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Article
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
