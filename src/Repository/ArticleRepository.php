@@ -100,6 +100,66 @@ class ArticleRepository extends ServiceEntityRepository
 
         return $result;
     }
+    public function findByRecherche(string $filtre) {
+
+        $filtreMarqueCode = strtoupper($filtre);
+        $query = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.marque')
+            ->from('App\Entity\Article', 'a')
+            ->where("a.marque LIKE '$filtreMarqueCode%'")
+            ->groupBy("a.marque")
+            ->orderBy('a.marque', 'ASC')
+            ->setMaxResults(5);
+
+        $filtreCategorie = ucfirst($filtre);
+        $query2 = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.univers')
+            ->from('App\Entity\Article', 'a')
+            ->where("a.univers LIKE '$filtreCategorie%'")
+            ->groupBy("a.univers")
+            ->orderBy('a.univers', 'ASC')
+            ->setMaxResults(2);
+
+        $query3 = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.famille')
+            ->from('App\Entity\Article', 'a')
+            ->where("a.famille LIKE '$filtreCategorie%'")
+            ->groupBy("a.famille")
+            ->orderBy('a.famille', 'ASC')
+            ->setMaxResults(3);
+
+        $query4 = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.sous_famille')
+            ->from('App\Entity\Article', 'a')
+            ->where("a.sous_famille LIKE '$filtreCategorie%'")
+            ->groupBy("a.sous_famille")
+            ->orderBy('a.sous_famille', 'ASC')
+            ->setMaxResults(2);
+        
+        $query5 = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.code_article')
+            ->from('App\Entity\Article', 'a')
+            ->where("a.code_article LIKE '$filtreMarqueCode%'")
+            ->groupBy("a.code_article")
+            ->orderBy('a.code_article', 'ASC')
+            ->setMaxResults(4);
+        
+        $dataMarque = $query->getQuery()->getResult();
+        $dataUnivers = $query2->getQuery()->getResult();
+        $dataFamille = $query3->getQuery()->getResult();
+        $dataSousFamille = $query4->getQuery()->getResult();
+        $dataCode = $query5->getQuery()->getResult();
+
+        $result['marque'] = $dataMarque;
+        $result['univers'] = $dataUnivers;
+        $result['famille'] = $dataFamille;
+        $result['sousFamille'] = $dataFamille;
+        $result['code'] = $dataCode;
+
+        dd($result);
+
+        return $result;
+    }
 
     //    /**
     //     * @return Article[] Returns an array of Article objects

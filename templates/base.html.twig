@@ -9,11 +9,7 @@
     {{
       encore_entry_link_tags("app")
     }}
-    {% endblock %} {% block javascripts %}
-    {{
-      encore_entry_script_tags("app")
-    }}
-    {% endblock %}
+    {% endblock %} 
   </head>
   <body>
     <header>
@@ -22,10 +18,11 @@
           <a href="{{ path('app_article') }}"><img src="{{ asset('img/logo_transparent.png') }}" alt="logo ElectroLuxe" /></a>
         </div>
         <div class="barre-recherche">
-          <input type="search" />
+          <input id="barre-de-recherche" name="recherche" type="search" />
           <button type="submit">
             <img src="{{ asset('img/loupe.png') }}" alt="icones loupe crée par Ayub Irawan" />
           </button>
+          <div id="recherche"></div>
         </div>
         <ul class="menu-nav">
           <li><a href="">Magasin</a></li>
@@ -34,47 +31,59 @@
         </ul>
         <div class="nav-bande">
           <ul class="menu-bande">
-            <li><a class="nav-produits" href="#menuderoulant">Produits</a></li>
+            <li><a class="nav-produits" onclick="menuProduits(event, this)" href="#menuderoulant">Produits</a></li>
             <li><a href="">Testo</a></li>
             <li><a href="">Testo</a></li>
             <li><a href="">Testo</a></li>
           </ul>
         </div>
-        <div id="menuderoulant" class="fantome"></div>
-        <div class="menuderoulant">
-          <a href="">close</a>
-          <ul>
-            <li><a href="#sous-menu-pem">Petit électroménager</a></li>
-            <ul id="sous-menu-pem" class="sous-menu-pem">
-              <li><a href="">Aspirateur</a></li>
-            </ul>
+        <div id="menuderoulant" class="menuderoulant">
+          <a id="close" href="">close</a>
+          <ul id="sous-menu">
+            <li><a id="lien-Pem" class="menu" href="">Petit électroménager</a></li>
             <li><a href="{{ path('app_article', { filtre: 'Brun' }) }}">Téléviseur</a></li>
+            <li><a id="lien-Pose" class="menu" href="">Pose-libre</a></li>
+            
+            <li><a class="menu" href="{{ path('app_article', { filtre: 'Encastrable' }) }}">Encastrable</a></li>
+            <li><a class="menu" href="{{ path('app_article', { filtre: 'Accessoires' }) }}">Accessoires</a></li>
+          </ul>
+          <ul id="sous-menu-pem" class="sous-menu-pem niveau2">
+            <li><a class="retour menu" href="">Retour</a></li>
+            <li><a href="{{ path('app_article', {filtre : 'PEM', famille : 'Aspirateur'}) }}">Aspirateur</a></li>
+            <li><a href="{{ path('app_article', {filtre : 'Brun', famille : 'Aspirateur', sous_famille : 'Aspirateur balai'})}}">Aspirateur balai</a></li>
+            <li><a href="{{ path('app_article', {filtre : 'Brun', famille : 'Aspirateur', sous_famille : 'Aspirateur robot'})}}">Aspirateur robot</a></li>
+          </ul>
+          <ul id="sous-menu-pose" class="sous-menu-pose niveau2">
+            <li><a class="retour menu" href="">Retour</a></li>
+            <li><a href="{{ path('app_article', {filtre : 'Pose-libre'})}}">Pose-libre</a></li>
+            <li><a class="menu" id="lien-cave" href="">Cave à vin</a></li>
+            <li><a href="">Congélateur</a></li>
+            <li><a href="">Four</a></li>
+            <li><a href="">Hotte aspirante</a></li>
+            <li><a href="">Lave-linge</a></li>
+            <li><a href="">Lave-vaisselle</a></li>
+            <li><a href="">Machine à café</a></li>
+            <li><a href="">Micro-ondes</a></li>
+            <li><a href="">Réfrigérateur</a></li>
+            <li><a href="">Table de cuisson</a></li>
+          </ul>
+          <ul id="sous-menu-cave" class="sous-menu-cave niveau3">
+            <li><a class="retour menu pose" href="">Retour</a></li>
+            <li><a href="">Cave à vin</a></li>
+            <li><a href="">Mise en service</a></li>
+            <li><a href="">Veillissement</a></li>
+          </ul>
+          <ul class="sous-menu-encastrable niveau2">
             <li><a href="{{ path('app_article', { filtre: 'Pose-libre' }) }}">Pose-libre</a></li>
-            <ul class="sous-menu-pose">
-              <li><a href="">Cave à vin</a></li>
-              <li><a href="">Centre de cuisson</a></li>
-              <li><a href="">Congélateur</a></li>
-              <li><a href="">Cusiniére</a></li>
-              <li><a href="">Lave-linge</a></li>
-              <li><a href="">Lave-vaisselle</a></li>
-              <li><a href="">Micro-ondes</a></li>
-              <li><a href="">Réfrigérateur</a></li>
-              <li><a href="">Séche-linge</a></li>
-            </ul>
-            <li><a href="{{ path('app_article', { filtre: 'Encastrable' }) }}">Encastrable</a></li>
-            <ul class="sous-menu-encastrable">
-              <li><a href="">Cave à vin</a></li>
-              <li><a href="">Congélateur</a></li>
-              <li><a href="">Four</a></li>
-              <li><a href="">Hotte aspirante</a></li>
-              <li><a href="">Lave-linge</a></li>
-              <li><a href="">Lave-vaisselle</a></li>
-              <li><a href="">Machine à café</a></li>
-              <li><a href="">Micro-ondes</a></li>
-              <li><a href="">Réfrigérateur</a></li>
-              <li><a href="">Table de cuisson</a></li>
-            </ul>
-            <li><a href="{{ path('app_article', { filtre: 'Accessoires' }) }}">Accessoires</a></li>
+            <li><a href="">Cave à vin</a></li>
+            <li><a href="">Centre de cuisson</a></li>
+            <li><a href="">Congélateur</a></li>
+            <li><a href="">Cusiniére</a></li>
+            <li><a href="">Lave-linge</a></li>
+            <li><a href="">Lave-vaisselle</a></li>
+            <li><a href="">Micro-ondes</a></li>
+            <li><a href="">Réfrigérateur</a></li>
+            <li><a href="">Séche-linge</a></li>
           </ul>
         </div>
       </nav>
@@ -84,4 +93,10 @@
       <a href="https://www.flaticon.com/fr/icones-gratuites/loupe" title="loupe icônes">Loupe icônes créées par Ayub Irawan - Flaticon</a>
     </footer>
   </body>
+  <script src="{{ asset("js/script.js") }}"></script>
+  {% block javascripts %}
+    {{
+      encore_entry_script_tags("app")
+    }}
+    {% endblock %}
 </html>

@@ -25,4 +25,15 @@ class ArticleController extends AbstractController
             'filtre' => $filtre
         ]);
     }
+    #[Route('/recherche', name: 'recherche_article')]
+    public function rechercheArticle(ArticleRepository $repo, Request $request)
+    {
+        $recherche = $request->get('data');
+        $recherche = json_decode($recherche);
+        var_dump($recherche);
+        die;
+        $result = $repo->findByRecherche($recherche);
+
+        return json_encode($result);
+    }
 }

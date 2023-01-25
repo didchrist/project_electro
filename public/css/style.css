@@ -197,12 +197,8 @@ footer a {
   content: "|";
   margin-left: 15px;
 }
-#menuderoulant,
-#menuderoulant ~ div {
+#menuderoulant {
   display: none;
-}
-#menuderoulant:target ~ .menuderoulant {
-  display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
@@ -210,10 +206,13 @@ footer a {
   left: 10%;
   top: 285px;
   width: 15%;
-  height: 100%;
   background-color: white;
   border: 1px solid black;
   z-index: 1;
+}
+#menuderoulant:target ~ .menuderoulant {
+  display: flex;
+  
 }
 .menuderoulant a {
   text-decoration: none;
@@ -244,7 +243,8 @@ footer a {
 }
 body .sous-menu-pose,
 body .sous-menu-encastrable,
-body .sous-menu-pem {
+body .sous-menu-pem,
+body .sous-menu-cave {
   display: none;
 }
 body .sous-menu-pem:target {
