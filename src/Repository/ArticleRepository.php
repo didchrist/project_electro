@@ -39,48 +39,76 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findAllArticle(int $page = 1, string $univers = 'a.univers', string $famille = null, string $sous_famille = null, int $limit = 30): array
+    public function findAllArticle(int $page = 1, array $filtre, string $famille = null, int $limit = 30): array
     {
         $limit = abs($limit);
 
         $result = [];
 
-        if ($univers === 'a.univers') {
+        /* dd($filtre); */
+
+        if ($filtre['code'] == null and $filtre['marque'] == null and $filtre['sous_famille'] == null and $filtre['famille'] == null and $filtre['univers'] == null) {
             $query = $this->getEntityManager()->createQueryBuilder()
                 ->select('a')
                 ->from('App\Entity\Article', 'a')
-                ->where("a.univers = $univers")
+                ->where("a.univers = a.univers")
                 ->orderBy('a.univers', 'ASC')
                 ->setMaxResults($limit)
                 ->setFirstResult($page * $limit - $limit);
-        } else {
-            if ($famille != null) {
-                if ($sous_famille != null) {
-                    $query = $this->getEntityManager()->createQueryBuilder()
-                        ->select('a')
-                        ->from('App\Entity\Article', 'a')
-                        ->where("a.famille = '$famille' and a.sous_famille = '$sous_famille'")
-                        ->orderBy('a.marque', 'ASC')
-                        ->setMaxResults($limit)
-                        ->setFirstResult($page * $limit - $limit);
-                } else {
-                    $query = $this->getEntityManager()->createQueryBuilder()
-                        ->select('a')
-                        ->from('App\Entity\Article', 'a')
-                        ->where("a.famille = '$famille'")
-                        ->orderBy('a.marque', 'ASC')
-                        ->setMaxResults($limit)
-                        ->setFirstResult($page * $limit - $limit);
-                }
-            } else {
-                $query = $this->getEntityManager()->createQueryBuilder()
-                    ->select('a')
-                    ->from('App\Entity\Article', 'a')
-                    ->where("a.univers = '$univers'")
-                    ->orderBy('a.marque', 'ASC')
-                    ->setMaxResults($limit)
-                    ->setFirstResult($page * $limit - $limit);
-            }
+        } elseif ($filtre['code'] != null) {
+            $code = $filtre['code'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.code_article = '$code'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } elseif ($filtre['marque'] != null) {
+            $marque = $filtre['marque'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.marque = '$marque'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } elseif ($filtre['sous_famille'] != null) {
+            $sous_famille = $filtre['sous_famille'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.sous_famille = '$sous_famille'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } elseif ($filtre['famille'] != null) {
+            $famille = $filtre['famille'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.famille = '$famille'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } elseif ($filtre['univers'] != null and $famille != null) {
+            $univers = $filtre['univers'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.univers = '$univers' and a.famille = '$famille'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
+        } elseif ($filtre['univers'] != null) {
+            $univers = $filtre['univers'];
+            $query = $this->getEntityManager()->createQueryBuilder()
+                ->select('a')
+                ->from('App\Entity\Article', 'a')
+                ->where("a.univers = '$univers'")
+                ->orderBy('a.marque', 'ASC')
+                ->setMaxResults($limit)
+                ->setFirstResult($page * $limit - $limit);
         }
 
         $paginator = new Paginator($query);
@@ -100,7 +128,8 @@ class ArticleRepository extends ServiceEntityRepository
 
         return $result;
     }
-    public function findByRecherche(string $filtre) {
+    public function findByRecherche(string $filtre)
+    {
 
         $filtreMarqueCode = strtoupper($filtre);
         $query = $this->getEntityManager()->createQueryBuilder()
@@ -135,7 +164,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->groupBy("a.sous_famille")
             ->orderBy('a.sous_famille', 'ASC')
             ->setMaxResults(2);
-        
+
         $query5 = $this->getEntityManager()->createQueryBuilder()
             ->select('a.code_article')
             ->from('App\Entity\Article', 'a')
@@ -143,7 +172,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->groupBy("a.code_article")
             ->orderBy('a.code_article', 'ASC')
             ->setMaxResults(4);
-        
+
         $dataMarque = $query->getQuery()->getResult();
         $dataUnivers = $query2->getQuery()->getResult();
         $dataFamille = $query3->getQuery()->getResult();
@@ -153,10 +182,8 @@ class ArticleRepository extends ServiceEntityRepository
         $result['marque'] = $dataMarque;
         $result['univers'] = $dataUnivers;
         $result['famille'] = $dataFamille;
-        $result['sousFamille'] = $dataFamille;
+        $result['sousFamille'] = $dataSousFamille;
         $result['code'] = $dataCode;
-
-        dd($result);
 
         return $result;
     }

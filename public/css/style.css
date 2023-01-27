@@ -212,7 +212,6 @@ footer a {
 }
 #menuderoulant:target ~ .menuderoulant {
   display: flex;
-  
 }
 .menuderoulant a {
   text-decoration: none;
@@ -250,4 +249,17 @@ body .sous-menu-cave {
 body .sous-menu-pem:target {
   display: flex;
   flex-direction: column;
+}
+.fenetre-recherche {
+  display: flex;
+  z-index: 1;
+  flex-direction: column;
+}
+.barre-recherche {
+  flex-direction: column;
+  border: 1px solid black;
+}
+.input-recherche {
+  display: flex;
+  flex-direction: row;
 }
